@@ -7,17 +7,28 @@
     flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
-        c_packages = with pkgs; [ gcc ];
 
-        cbonsai = pkgs.stdenv.mkDerivation {
-          name = "cbonsai";
-          src = pkgs.fetchurl "https://gitlab.com/jallbrit/cbonsai";
-          sha256 = "01bf6kh1fxxbhy7vijajpx30q9iqdsqqi74wvpc0j86w28w0af4q";
+        packages = {
+          cbonsai = pkgs.stdenv.mkDerivation {
+            name = "cbonsai";
+            src = pkgs.fetchFromGitLab {
+              owner = "jallbrit";
+              repo = "cbonsai";
+              rev = "b3ee97a0";
+              sha256 = "8JwwrTS8pOLwNYsnBGwqazGrTbts7LADndEdTit6Kc0=";
+            };
+            nativeBuildInputs = with pkgs; [ gcc gnumake pkg-config ];
+            buildInputs = with pkgs; [ ncurses ];
+            installPhase = ''
+              make install PREFIX=$out
+            '';
+          };
         };
       in rec {
         devShell = pkgs.mkShell {
-          buildInputs = [ cbonsai ];
+          buildInputs = [ packages.cbonsai ];
         };
+        defaultPackage = packages.cbonsai;
       });
 }
 
