@@ -12,8 +12,8 @@ def f1():
     now = datetime.now()
     return now.strftime("%H:%M:%S")
 
-def f2():
-    with open("/etc/host.conf", "r") as host:
+def f2(fpath: str):
+    with open(fpath, "r") as host:
         return host.readline()
 
 def f3(a: list[int], b: list[int]):
