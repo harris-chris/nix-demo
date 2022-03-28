@@ -20,5 +20,6 @@ def f3(a: list[int], b: list[int]):
     return np.add(a, b)
 
 def f4(d: Dict[str, int]):
-    return {**d, **{"extra_key": 7}}
+    updated = {**d, **{"extra_key": 7}} # Just merges d with {"extra_key": 7}
+    return list(updated.values())
 
