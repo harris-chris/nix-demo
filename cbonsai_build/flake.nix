@@ -26,10 +26,7 @@
           # '';
         };
       in rec {
-        devShell = pkgs.mkShell {
-          buildInputs = [ cbonsai ];
-        };
-        # defaultPackage = cbonsai;
+        defaultPackage = cbonsai;
       });
 }
 
